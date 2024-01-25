@@ -1,0 +1,44 @@
+@use '../../globals.scss';
+
+.toggle {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+
+    &__input {
+        visibility: hidden;
+    }
+    &__input + label {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        font-size: 1.5em;
+        cursor: pointer;
+        color: globals.$text-color;
+    }
+
+    &__input + label::before {
+        content: "";
+        height: 1em;
+        width: 2em;
+        border-radius: 1em;
+        background-color: globals.$toggle-bg;
+        transition: background-color 250ms ease-in-out;
+    }
+
+    &__input + label::after {
+        content: "";
+        height: 0.8em;
+        width: 0.8em;
+        border-radius: 1em;
+        background-color: globals.$toggle-ball;
+        position: absolute;
+        left: 0.2em;
+        transition: background-color 250ms ease-in-out;
+        transition: transform 250ms ease-in-out;
+    }
+
+    &__input:checked + label::after {
+        transform: translateX(100%);
+    }
+}

@@ -1,0 +1,12 @@
+@use '../../globals.scss';
+
+.widget {
+    width: 600px;
+    height: 150px;
+    background-color: globals.$widget-bg;
+    border-radius: 1em;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

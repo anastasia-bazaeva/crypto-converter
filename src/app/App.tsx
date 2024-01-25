@@ -1,18 +1,22 @@
-import { Button } from '../ui/button';
-import { ButtonType, DefaultButtonType } from '../ui/button/types';
+import { Switcher } from '../ui/switcher/switcher';
 import styles from './index.module.scss';
+import { ThemeType } from '../types/types';
+import useLocalStorage from 'use-local-storage';
+import { CryptoWidget } from '../ui/widget/widget';
 
 function App() {
+  const [ligthTheme, setTheme] = useLocalStorage('isLight', false);
+  const toggleTheme = () => {
+    setTheme(!ligthTheme);
+  }
 
   return (
-    <main className={styles.main}>
-      <h1 className={styles.text}>Component</h1>
-      <Button 
-      appearance={ButtonType.Switcher} 
-      type={DefaultButtonType.Button}/>
-      <Button 
-      appearance={ButtonType.Classic} 
-      type={DefaultButtonType.Button}/>
+    <main className={styles.main} app-theme={ligthTheme ? ThemeType.Light : ThemeType.Dark}>
+      <h1 className={styles.text}>Конвертер валют</h1>
+      <Switcher 
+      theme={ligthTheme} 
+      handleChange={toggleTheme}/>
+      <CryptoWidget />
     </main>
   )
 }
