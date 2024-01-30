@@ -5,7 +5,7 @@ import useLocalStorage from 'use-local-storage';
 import { CryptoWidget } from '../ui/widget/widget';
 
 function App() {
-  const [ligthTheme, setTheme] = useLocalStorage('isLight', false);
+  const [ligthTheme, setTheme] = useLocalStorage('isLight', true);
   const toggleTheme = () => {
     setTheme(!ligthTheme);
   }
