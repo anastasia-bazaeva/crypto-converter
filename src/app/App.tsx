@@ -12,7 +12,6 @@ function App() {
 
   return (
     <main className={styles.main} app-theme={ligthTheme ? ThemeType.Light : ThemeType.Dark}>
-      <h1 className={styles.text}>Конвертер валют</h1>
       <Switcher 
       theme={ligthTheme} 
       handleChange={toggleTheme}/>

@@ -1,12 +1,15 @@
 @use '../../globals.scss';
 
 .widget {
-    width: 600px;
-    height: 150px;
-    background-color: globals.$widget-bg;
+    max-width: 1000px;
+    background-color: color-mix(in srgb, globals.$widget-bg 80%, transparent);
     border-radius: 1em;
-    padding: 2em;
+    padding: 40px 20px;
     display: flex;
+    gap: 20px;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);
+    position: relative;
 }

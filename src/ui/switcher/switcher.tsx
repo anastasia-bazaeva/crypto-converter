@@ -14,7 +14,7 @@ export const Switcher = ({ handleChange, theme }:SwitcherPropTypes) => {
             type='checkbox'
             id='check'
             checked={theme}/>
-            <label htmlFor='check'>Сменить тему</label>
+            <label htmlFor='check'></label>
         </div>
     )
 }
