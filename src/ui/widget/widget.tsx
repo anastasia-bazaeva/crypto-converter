@@ -8,7 +8,7 @@ export const CryptoWidget = () => {
 
     return (
       <div className={styles.widget}> 
-        <Typography variant="h5" component="h1">Конвертировать</Typography>
+        <Typography variant="h5" component="h1" mb={3}>Конвертировать криптовалюту</Typography>
         <CurrencyForm currencyOptions={currencies}/>
       </div>
     )
