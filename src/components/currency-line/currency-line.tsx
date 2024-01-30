@@ -12,8 +12,8 @@ interface CurLineProps {
 }
 
 export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
-    const [amount, setAmount] = useState<string|number>('');
-    const [result, setResult] = useState<string|number>('');
+    const [amount, setAmount] = useState<number>(0);
+    const [result, setResult] = useState<number>(0);
     const [currValueFrom, setCurrValueFrom] = useState<OptionNameType>(OptionNameType.BTC);
     const [currValueTo, setCurrValueTo] = useState<OptionNameType>(OptionNameType.BTC);
     const [fromFirst, setFromFirst] = useState<boolean>(true);
@@ -45,7 +45,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
         setReq(null);
         e.preventDefault();
         setFromFirst(true);
-        setAmount(e.target.value);
+        setAmount(Number(e.target.value));
         setReq({
             from: fullNameCurr(currValueFrom),
             to: currValueTo
@@ -57,7 +57,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
         setReq(null);
         e.preventDefault();
         setFromFirst(false);
-        setAmount(e.target.value);
+        setAmount(Number(e.target.value));
         setReq({
             from: fullNameCurr(currValueTo),
             to: currValueFrom
@@ -76,21 +76,21 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
     }, [currValueFrom, currValueTo]);
 
     useEffect(()=>{
-      if(isError && (parseInt(amount, 10) > 0)){
+      if(isError && amount && amount > 0){
         setError('Сервер не отвечает: произошла ошибка подключения, попробуйте позднее')
       }
     },[isError])
 
     useEffect(()=>{
         if(rate && isSuccess) {
-            const rateObj = Object.values(rate);
-            const ratenumber = Object.values(rateObj[0])[0] ?? null;
+            const rateObj: Array<object> = Object.values(rate);
+            const ratenumber = Number(Object.values(rateObj[0])[0]);
             if(!ratenumber){
-                setResult('')
+                setResult(0)
                 setError('Произошла ошибка на сервере: данные о выбранной паре валют не загрузились')
             } else {
                 setError(null);
-                if(amount !== '') { 
+                if(amount && amount !== 0) { 
                     setResult(amount * ratenumber);
                     setMessage(`Курс 1 ${fromFirst 
                         ? fullNameCurr(currValueFrom) 
@@ -98,7 +98,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
                             ? fullNameCurr(currValueTo) 
                             : fullNameCurr(currValueFrom)} составляет ${ratenumber}`)
                 } else {
-                    setResult('');
+                    setResult(0);
                 }
             }
         }
@@ -116,7 +116,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
                             }
                         }}
                     id="amountFrom"
-                    value={fromFirst ? amount : result}
+                    value={fromFirst ? Number(amount) > 0 ? amount : '' : Number(result) > 0 ? result : ''}
                     onChange={handleAmountChange}
                     type="number"
                     InputProps={{
@@ -152,7 +152,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
                             }
                         }}
                     id="amountTo"
-                    value={fromFirst ? result : amount}
+                    value={fromFirst ? Number(result) > 0 ? result : '' : Number(amount) > 0 ? amount : ''}
                     onChange={handleAmountChangeSecond}
                     type="number"
                     InputProps={{
@@ -180,7 +180,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
             {error ? <span><p className={styles.currencyInfo__span}>{error}</p></span>
             : <Typography maxWidth={300} variant='h6' component='h4' sx={{
                 alignSelf: 'flex-start'
-            }}>{message}</Typography>
+            }}>{Number(amount) > 0 ? message : ''}</Typography>
             }
         </>
     )
