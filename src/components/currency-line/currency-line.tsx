@@ -20,7 +20,7 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
     const [error, setError] = useState<string|null>(null);
     const [message, setMessage] = useState<string>('');
     const [req, setReq] = useState<reqType|null>(null);
-    const {data: rate, isSuccess} = useGetRateQuery(req ?? skipToken);
+    const {data: rate, isSuccess, isError } = useGetRateQuery(req ?? skipToken);
 
 
     const handleCurrFromChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -76,6 +76,12 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
     }, [currValueFrom, currValueTo]);
 
     useEffect(()=>{
+      if(isError && (parseInt(amount, 10) > 0)){
+        setError('Сервер не отвечает: произошла ошибка подключения, попробуйте позднее')
+      }
+    },[isError])
+
+    useEffect(()=>{
         if(rate && isSuccess) {
             const rateObj = Object.values(rate);
             const ratenumber = Object.values(rateObj[0])[0] ?? null;
@@ -86,7 +92,11 @@ export const CurrencyForm = ({ currencyOptions }: CurLineProps) => {
                 setError(null);
                 if(amount !== '') { 
                     setResult(amount * ratenumber);
-                    setMessage(`Отношение 1 ${fromFirst ? currValueFrom : currValueTo} к 1 ${fromFirst ? currValueTo: currValueFrom} составляет ${ratenumber}`)
+                    setMessage(`Курс 1 ${fromFirst 
+                        ? fullNameCurr(currValueFrom) 
+                        : fullNameCurr(currValueTo)} к 1 ${fromFirst 
+                            ? fullNameCurr(currValueTo) 
+                            : fullNameCurr(currValueFrom)} составляет ${ratenumber}`)
                 } else {
                     setResult('');
                 }

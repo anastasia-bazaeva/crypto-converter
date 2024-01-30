@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# Конвертер криптовалют
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## [ССылка на демо]()
 
-Currently, two official plugins are available:
+#### О проекте
+Это конвертер криптовалюты с тремя возможными вариантами валют:
+- Bitcoin
+- Ethereum
+- Tether
+Конвертер работает по принципу ввода количества валюты в одно поле и вывода результата в другом поле. Порядок полей значения не имеет, во втором по счету инпуте точно также можно ввести значение, чтобы получить результат в первом.
+При получении результата ниже указан курс сколько стоит единица валюты по отношению к другой.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+В конвертере использовано API coingecko, и их сервер работает с особенностью - он возвращает результат отношения Tether к другим валютам, но периодами возвращает пустую информацию по запросу отношения других валют к Tether. Решено было не бороться с этой проблемой на фронте, а показать, что конвертер предусмотрел обработку такой ошибки сервера.
 
-## Expanding the ESLint configuration
+В конвертере есть отображение для мобильных устройств и темная тема.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+#### Что используется в проекте:
+- React + Typescript
+- Redux Toolkit + Query
+- API coingecko
+- MUI Material Components
+- А также реализован кастомный компонент переключателя темы
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
