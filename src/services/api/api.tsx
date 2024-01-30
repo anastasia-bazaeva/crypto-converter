@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_KEY, API_URL } from '../../app-config';
+import { VITE_API_KEY, VITE_API_URL } from '../../app-config';
 
 export const currencyApi = createApi({
     reducerPath: 'api',
     tagTypes: ['Currency'],
-    baseQuery: fetchBaseQuery({ baseUrl: `${API_URL}`}),
+    baseQuery: fetchBaseQuery({ baseUrl: `${VITE_API_URL}`}),
     endpoints: (build) => ({
         getRate: build.query({
-            query: (params) => `/simple/price/?ids=${params.from}&vs_currencies=${params.to}&x_cg_demo_api_key=${API_KEY}`,
+            query: (params) => `/simple/price/?ids=${params.from}&vs_currencies=${params.to}&x_cg_demo_api_key=${VITE_API_KEY}`,
         }),
     })
 });
